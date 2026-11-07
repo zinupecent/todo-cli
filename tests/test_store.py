@@ -102,5 +102,10 @@ class TestTodoStore(unittest.TestCase):
             self.assertEqual(default_path(), Path.home() / ".todo-cli.json")
 
 
+    def test_add_strips_whitespace(self):
+        todo = self.store.add("  买菜  ")
+        self.assertEqual(todo["title"], "买菜")
+
+
 if __name__ == "__main__":
     unittest.main()
