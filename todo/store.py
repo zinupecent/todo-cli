@@ -77,6 +77,11 @@ class TodoStore:
         todos = [t for t in self._todos if include_done or not t["done"]]
         return sorted(todos, key=lambda t: t["id"])
 
+    def search(self, keyword):
+        """按关键词搜索标题（不区分大小写），返回匹配的任务列表。"""
+        kw = keyword.lower()
+        return [t for t in self._todos if kw in t["title"].lower()]
+
     def get(self, tid):
         for t in self._todos:
             if t["id"] == tid:

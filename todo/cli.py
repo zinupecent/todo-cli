@@ -43,6 +43,15 @@ def cmd_rm(args, store):
         sys.exit(1)
 
 
+def cmd_search(args, store):
+    results = store.search(" ".join(args.keyword))
+    if not results:
+        print("没有找到匹配的任务")
+        return
+    for t in results:
+        print(fmt_todo(t))
+
+
 def cmd_clear(args, store):
     if args.all:
         n = store.clear_all()
@@ -83,6 +92,9 @@ def build_parser():
     c = sub.add_parser("clear", help="清理任务（默认只清已完成的）")
     c.add_argument("--all", action="store_true", help="清空全部任务，慎用")
     c.set_defaults(func=cmd_clear)
+    s = sub.add_parser("search", help="按关键词搜索任务")
+    s.add_argument("keyword", nargs="+", help="搜索关键词")
+    s.set_defaults(func=cmd_search)
 
     return p
 
