@@ -107,5 +107,12 @@ class TestTodoStore(unittest.TestCase):
         self.assertEqual(todo["title"], "买菜")
 
 
+    def test_done_twice_is_idempotent(self):
+        self.store.add("a")
+        self.assertTrue(self.store.done(1))
+        self.assertTrue(self.store.done(1))
+        self.assertTrue(self.store.get(1)["done"])
+
+
 if __name__ == "__main__":
     unittest.main()
