@@ -114,5 +114,18 @@ class TestTodoStore(unittest.TestCase):
         self.assertTrue(self.store.get(1)["done"])
 
 
+    def test_search_finds_by_keyword(self):
+        self.store.add("买菜")
+        self.store.add("买牛奶")
+        self.store.add("写周报")
+        results = self.store.search("买")
+        self.assertEqual([t["id"] for t in results], [1, 2])
+
+    def test_search_is_case_insensitive(self):
+        self.store.add("Buy milk")
+        self.store.add("写周报")
+        self.assertEqual(len(self.store.search("buy")), 1)
+
+
 if __name__ == "__main__":
     unittest.main()
